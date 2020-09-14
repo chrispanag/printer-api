@@ -8,6 +8,7 @@
     "scripts": {
         "start": "node ./build/server.js",
         "dev": "nodemon",
+        "clean": "rm -r build && rm .buildinfo",
         "build": "npx tsc"
     },
     "devDependencies": {
