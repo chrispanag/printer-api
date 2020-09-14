@@ -1,3 +1,5 @@
 node_modules
 .buildinfo
 build
+yarn-error.log
+uploads

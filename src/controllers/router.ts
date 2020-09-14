@@ -1,8 +1,8 @@
 import Router from "koa-router";
-import search from './search'
+import search from './print'
 
 const router = new Router();
 
-router.use('/search', search.routes(), search.allowedMethods());
+router.use('/print', search.routes(), search.allowedMethods());
 
 export default router;
