@@ -1,10 +1,11 @@
+import env from './utils/env';
 import initializeFolders from './utils/initializeFolder';
 
 console.log('Initializing...');
 
 import app from './app';
 
-const PORT = 3000;
+const PORT = env.port;
 
 initializeFolders();
 

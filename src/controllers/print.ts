@@ -3,8 +3,19 @@ import Router from "koa-router";
 import bodyParser from "koa-body";
 
 import * as printer from '@thiagoelg/node-printer';
+import env from "../utils/env";
 
 const router = new Router();
+
+const printerOptions = {
+    success: (jobID: string) => {
+        console.log("Sent to printer with ID: " + jobID);
+    },
+    error: (err: Error) => {
+        console.log(err);
+    },
+    ...(env.printerName ? ({ printer: env.printerName }) : {})
+};
 
 async function print(ctx: Context, next: Next) {
     try {
@@ -19,19 +30,14 @@ async function print(ctx: Context, next: Next) {
         const file = files['pdf'];
         
         printer.printFile({
-            filename: file.path, // printer name, if missing then will print to default printer
-            printer: 'Lexmark_MX317dn@ET0021B7235B01.local',
-            success: (jobID: string) => {
-                console.log("sent to printer with ID: " + jobID);
-            },
-            error: (err: Error) => {
-                console.log(err);
-            }
+            filename: file.path,
+            ...printerOptions
         });
 
         ctx.body = { success: true }
         await next();
     } catch (err) {
+        console.log(err);
         ctx.body = { error: err.message }
     }
 }
