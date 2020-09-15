@@ -8,14 +8,26 @@ const router = new Router();
 
 async function print(ctx: Context, next: Next) {
     try {
-        const file = ctx.request.files;
-        if (!file) {
+        const files = ctx.request.files;
+        if (!files) {
             throw new Error("No file uploaded!");
         }
-        console.log(printer);
-        console.log(printer.getPrinters())
+        if (!files['pdf']) {
+            throw new Error("No file uploaded!");
+        }
 
-        printer.printFile(file.path, { n: 1, p: 1 });
+        const file = files['pdf'];
+        
+        printer.printFile({
+            filename: file.path, // printer name, if missing then will print to default printer
+            printer: 'Lexmark_MX317dn@ET0021B7235B01.local',
+            success: (jobID: string) => {
+                console.log("sent to printer with ID: " + jobID);
+            },
+            error: (err: Error) => {
+                console.log(err);
+            }
+        });
 
         ctx.body = { success: true }
         await next();
