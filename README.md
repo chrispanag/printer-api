@@ -17,6 +17,13 @@ PRINTER_NAME=<THE_NAME_OF_YOUR_PRINTER> (or delete the key completely to use you
 PORT=<PORT> (Default is 3000, change it as you wish)
 ```
 
+### How to perform the request
+
+```curl
+curl --location --request POST 'http://localhost:3000/print' \
+--form 'pdf=@<path_to_file>'
+```
+
 ### Troubleshooting
 
 I've only tested it on a Linux system (Ubuntu), and most probably it won't work on Windows. Also, it won't run (at least out of the box) on Docker.
