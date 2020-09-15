@@ -24,4 +24,3 @@ I've only tested it on a Linux system (Ubuntu), and most probably it won't work 
 ## Acknowledgments
 
 Thanks to [@thiagoelg](https://github.com/thiagoelg) for maintaining the [npm module](https://github.com/thiagoelg/node-printer) to interface with the printer.
-
