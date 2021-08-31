@@ -1,1 +1,1 @@
-declare module '@thiagoelg/node-printer';
+declare module '@thiagoelg/node-printer'

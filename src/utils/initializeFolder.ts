@@ -1,12 +1,12 @@
-import { existsSync, mkdirSync } from 'fs';
+import { existsSync, mkdirSync } from 'fs'
 
 export default function initializeFolders(uploadsPath = './uploads') {
-    const path = uploadsPath;
+    const path = uploadsPath
     try {
         if (!existsSync(path)) {
-            mkdirSync(path);
+            mkdirSync(path)
         }
     } catch (err) {
-        throw err;
+        throw err
     }
 }

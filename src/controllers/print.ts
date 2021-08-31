@@ -1,51 +1,59 @@
-import { Context, Next } from "koa";
-import Router from "koa-router";
-import bodyParser from "koa-body";
+import { Context, Next } from 'koa'
+import Router from 'koa-router'
+import bodyParser from 'koa-body'
 
-import * as printer from '@thiagoelg/node-printer';
-import env from "../utils/env";
+import * as printer from '@thiagoelg/node-printer'
+import env from '../utils/env'
 
-const router = new Router();
+const router = new Router()
 
 const printerOptions = {
     success: (jobID: string) => {
-        console.log("Sent to printer with ID: " + jobID);
+        console.log('Sent to printer with ID: ' + jobID)
     },
     error: (err: Error) => {
-        console.log(err);
+        console.log(err)
     },
-    ...(env.printerName ? ({ printer: env.printerName }) : {})
-};
+    ...(env.printerName ? { printer: env.printerName } : {}),
+}
 
 async function print(ctx: Context, next: Next) {
     try {
-        const files = ctx.request.files;
+        const files = ctx.request.files
         if (!files) {
-            throw new Error("No file uploaded!");
+            throw new Error('No file uploaded!')
         }
         if (!files['pdf']) {
-            throw new Error("No file uploaded!");
+            throw new Error('No file uploaded!')
         }
 
-        const file = files['pdf'];
-        
+        const file = files['pdf']
+
         printer.printFile({
             filename: file.path,
-            ...printerOptions
-        });
+            ...printerOptions,
+        })
 
         ctx.body = { success: true }
-        await next();
+        await next()
     } catch (err) {
-        console.log(err);
-        ctx.body = { error: err.message }
+        console.log(err)
+        if (err instanceof Error) {
+            ctx.body = { error: err.message }
+        }
+
+        throw new Error('Severe error!')
     }
 }
 
-router.post('/', bodyParser({
-    formidable: { uploadDir: './uploads', multiples: false },
-    multipart: true,
-    urlencoded: true
-}), print);
+router.post(
+    '/',
+    bodyParser({
+        formidable: { uploadDir: './uploads', multiples: false },
+        multipart: true,
+        urlencoded: true,
+    }),
+    print
+)
 
-export default router;
+export default router

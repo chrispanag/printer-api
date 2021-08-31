@@ -1,14 +1,14 @@
-import env from './utils/env';
-import initializeFolders from './utils/initializeFolder';
+import env from './utils/env'
+import initializeFolders from './utils/initializeFolder'
 
-console.log('Initializing...');
+console.log('Initializing...')
 
-import app from './app';
+import app from './app'
 
-const PORT = env.port;
+const PORT = env.port
 
-initializeFolders();
+initializeFolders()
 
 app.listen(PORT, () => {
-    console.log(`Server is listening on port ${PORT}...`);
-});
+    console.log(`Server is listening on port ${PORT}...`)
+})
